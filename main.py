@@ -78,5 +78,19 @@ def usersignup():
 
     return render_template("/usersignup.html")
 
+@app.route("/adminlogin", methods = ['GET','POST'])
+def adminlogin():
+    if request.method == 'POST':
+        getname = request.form["name"]
+        getpass = request.form["pass"]
+    try:
+        if getname == 'admin' and getpass == "12345":
+            return redirect("/adminview")
+        else:
+            print("Invalid username and password")
+    except Exception as e:
+        print(e)
+    return render_template("/adminlogin.html")
+    
 if __name__ == "__main__":
     app.run(debug=True)
