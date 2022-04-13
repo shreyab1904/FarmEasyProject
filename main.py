@@ -7,16 +7,26 @@ app = Flask(__name__)
 conn = sqlite3.connect("database.db", check_same_thread=False)
 cursor = conn.cursor()
 listOfTables= conn.execute("SELECT name from sqlite_master WHERE type='table' AND name='USER'").fetchall()
+listOfTables1 = conn.execute("SELECT name from sqlite_master WHERE type='table' AND name='PRODUCT'").fetchall()
 
 if listOfTables!=[]:
-    print("Table Already Exists ! ")
+    print("Table User Already Exists ! ")
 else:
     conn.execute(''' CREATE TABLE USER(
                             ID INTEGER PRIMARY KEY AUTOINCREMENT,
                             firstname TEXT, lastname TEXT, DOB TEXT, email TEXT,   
                             phone INTEGER, password TEXT,
                             confirmpassword TEXT); ''')
-print("Table has created")
+print("Table User has created")
+
+if listOfTables1!=[]:
+    print("Product Table Already exists ! ")
+else:
+    conn.execute(''' CREATE TABLE PRODUCT(
+                        ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        bname TEXT, pname TEXT, image BLOB,
+                        price TEXT); ''')
+print("Table Product has created")
 
 @app.route("/")
 def index():
@@ -85,12 +95,36 @@ def adminlogin():
         getpass = request.form["pass"]
     try:
         if getname == 'admin' and getpass == "12345":
-            return redirect("/adminview")
+            return redirect("/productentry")
         else:
             print("Invalid username and password")
     except Exception as e:
         print(e)
     return render_template("/adminlogin.html")
-    
+
+@app.route("/productentry", methods = ['GET','POST'])
+def adminproductentry():
+    if request.method == 'POST':
+        getbname = request.form['bname']
+        getpname = request.form['pname']
+        getimage = request.form['img']
+        getprice = request.form['price']
+
+        print(getbname)
+        print(getpname)
+        print(getimage)
+        print(getprice)
+
+    try:
+        query = "INSERT INTO PRODUCT(bname,pname,image,price)VALUES('"+getbname+"','"+getpname+"','"+getimage+"','"+getprice+"')"
+        print(query)
+        cursor.execute(query)
+        conn.commit()
+        print("SUCCESSFULLY ADDED!")
+    except Exception as e:
+        print(e)   
+
+    return render_template("/adminproductentry.html")
+
 if __name__ == "__main__":
     app.run(debug=True)
