@@ -60,11 +60,13 @@ def usersignup():
         getpass = request.form['pass']
         getcnfpass = request.form['cnfpass']
 
-        print(getname)
-        print(getaddress)
+        print(getfirstname)
+        print(getlastname)
+        print(getDOB)
         print(getemail)
         print(getphone)
         print(getpass)
+        print(getcnfpass)
 
     try:
         query = cursor.execute("INSERT INTO USER(firstname,lastname,DOB,email,phone,password,confirmpassword)VALUES('"+getfirstname+"','"+getlastname+"','"+getDOB+"','"+getemail+"','"+getphone+"','"+getpass+"','"+getcnfpass+"')")
