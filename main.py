@@ -28,7 +28,7 @@ if listOfTables1!=[]:
 else:
     conn.execute(''' CREATE TABLE PRODUCT(
                         ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        bname TEXT, pname TEXT, image BLOB,
+                        bname TEXT, pname TEXT, category TEXT, image BLOB,
                         price TEXT); ''')
 print("Table Product has created")
 
@@ -115,24 +115,25 @@ def adminproductentry():
     if request.method == 'POST':
         getbname = request.form['bname']
         getpname = request.form['pname']
-        getimage = request.form['img']
+        getcategory = request.form['category']
+        getimage = request.form['image']
         getprice = request.form['price']
 
         print(getbname)
         print(getpname)
+        print(getcategory)
         print(getimage)
         print(getprice)
 
     try:
-        query = "INSERT INTO PRODUCT(bname,pname,image,price)VALUES(?,?,?,?)"
+        query = "INSERT INTO PRODUCT(bname, pname, category, image, price)VALUES(?, ?, ?, ?, ?)"
         photo = convertToBinaryData(getimage)
-        data = (getbname,getpname,photo,getprice)
-        print(data)
+        data = (getbname, getpname, getcategory, photo, getprice)
         cursor.execute(query, data)
         conn.commit()
         print("SUCCESSFULLY ADDED!")
     except Exception as e:
-        print(e)   
+        print(e)
 
     return render_template("/adminproductentry.html")
 
@@ -142,7 +143,7 @@ def userproductdisplay():
     query="SELECT * FROM PRODUCT"
     cursor.execute(query)
     result = cursor.fetchall()
-    
+
     return render_template("/userproductdisplay.html",product = result)
 
 def convertToBinaryData(filename):
