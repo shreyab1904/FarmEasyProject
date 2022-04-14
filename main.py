@@ -1,8 +1,12 @@
 import flask
 from flask import Flask, render_template, request, redirect, session
+from flask_session import Session
 import sqlite3
 
 app = Flask(__name__)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 conn = sqlite3.connect("database.db", check_same_thread=False)
 cursor = conn.cursor()
@@ -51,8 +55,7 @@ def userlogin():
 
             session["name"] = getname
             session["id"] = getid
-
-            return redirect("/")
+            return redirect("/productdisplay")
     except Exception as e:
         print(e)
 
@@ -88,6 +91,11 @@ def usersignup():
 
     return render_template("/usersignup.html")
 
+@app.route("/payment")
+def userpaymentpage():
+    return render_template("/userpaymentpage.html")
+
+
 @app.route("/adminlogin", methods = ['GET','POST'])
 def adminlogin():
     if request.method == 'POST':
@@ -116,15 +124,32 @@ def adminproductentry():
         print(getprice)
 
     try:
-        query = "INSERT INTO PRODUCT(bname,pname,image,price)VALUES('"+getbname+"','"+getpname+"','"+getimage+"','"+getprice+"')"
-        print(query)
-        cursor.execute(query)
+        query = "INSERT INTO PRODUCT(bname,pname,image,price)VALUES(?,?,?,?)"
+        photo = convertToBinaryData(getimage)
+        data = (getbname,getpname,photo,getprice)
+        print(data)
+        cursor.execute(query, data)
         conn.commit()
         print("SUCCESSFULLY ADDED!")
     except Exception as e:
         print(e)   
 
     return render_template("/adminproductentry.html")
+
+@app.route("/productdisplay", methods = ['GET','POST'])
+def userproductdisplay():
+    cursor = conn.cursor()
+    query="SELECT * FROM PRODUCT"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    
+    return render_template("/userproductdisplay.html",product = result)
+
+def convertToBinaryData(filename):
+    # Convert digital data to binary format
+    with open(filename, 'rb') as file:
+        blobData = file.read()
+    return blobData
 
 if __name__ == "__main__":
     app.run(debug=True)

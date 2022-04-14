@@ -110,7 +110,6 @@
             }
 
 
-
             .heading{
                 text-align: center;
                 padding:2rem 0;
@@ -134,105 +133,8 @@
                 padding-left: 15px;
                 padding-right: 15px;
             }
-            #first_product{
-                float: left;
-                width: 300px;
-                height: 450px;
-                border: solid black;
-                margin-left: 20PX;
-            }
-            #second_product{
-                float: left;
-                width: 300px;
-                height: 450px;
-                border: solid black;
-                margin-left: 20PX;
-            }
-            #third_product{
-                float: left;
-                width: 300px;
-                height: 450px;
-                border: solid black;
-                margin-left: 20PX;
-            }
-            #fourth_product{
-                float: left;
-                width: 300px;
-                height: 450px;
-                border: solid black;
-                margin-left: 20PX;
-            }
-            #fifth_product{
-                float: left;
-                width: 300px;
-                height: 450px;
-                border: solid black;
-                margin-left: 20PX;
-            }
-            #sixth_product{
-                float: left;
-                width: 300px;
-                height: 450px;
-                border: solid black;
-                margin-left: 20PX;
-            }
-            #seventh_product{
-                float: left;
-                width: 300px;
-                height: 450px;
-                border: solid black;
-                margin-left: 20PX;
-            }
-            #eighth_product{
-                float: left;
-                width: 300px;
-                height: 450px;
-                border: solid black;
-                margin-left: 20PX;
-            }
-            #ninth_product{
-                float: left;
-                width: 300px;
-                height: 450px;
-                border: solid black;
-                margin-left: 20PX;
-            }
-            #tenth_product{
-                float: left;
-                width: 300px;
-                height: 450px;
-                border: solid black;
-                margin-left: 20PX;
-            }
-            #eleventh_product{
-                float: left;
-                width: 300px;
-                height: 450px;
-                border: solid black;
-                margin-left: 20PX;
-            }
-            #twelth_product{
-                float: left;
-                width: 300px;
-                height: 450px;
-                border: solid black;
-                margin-left: 20PX;
-            }
-            #thirteenth_product{
-                float: left;
-                width: 300px;
-                height: 450px;
-                border: solid black;
-                margin-left: 20PX;
-            }
-            #fourteenth_product{
-                float: left;
-                width: 300px;
-                height: 450px;
-                border: solid black;
-                margin-left: 20PX;
-            }
-            #fifteenth_product{
+
+            #products{
                 float: left;
                 width: 300px;
                 height: 450px;
@@ -242,227 +144,20 @@
 
     </style>
     
-
 </head>
 <body>
-    <div class="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-
-    <section class="products" id="products">
+    <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
+    <section class="products" id="product">
         <h1 class="heading"><center>OUR PRODUCTS</center></h1>
-        
+        {% for i in product %}
         <div class=" product-slider">
             <div class="wrapper">
-                <div class="container">
-                <div class="box" id="first_product">
-                    <img src="C:\Users\Dell\PycharmProjects\FarmEasy\image\product-1.png" alt="oranges">
-                    <h3>Fresh Oranges</h3>
-                    <div class="price">Rs 40/-</div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <a href="#" class="btn">Add to cart</a>
-                </div>
-                
-
-                <div class="box" id="second_product">
-                    <img src="C:\Users\Dell\PycharmProjects\FarmEasy\image\product-2.png" alt="">
-                    <h3>Fresh Onion</h3>
-                    <div class="price">Rs 30/-</div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <a href="#" class="btn">Add to cart</a>
-                </div>
-
-                <div class="box" id="third_product">
-                    <img src="C:\Users\Dell\PycharmProjects\FarmEasy\image\product-3.png" alt="">
-                    <h3>Fresh Meat</h3>
-                    <div class="price">Rs 200/-</div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <a href="#" class="btn">Add to cart</a>
-                </div>
-                </div>
-
-                <div class="container" >
-                <div class="box" id="fourth_product">
-                    <img src="C:\Users\Dell\PycharmProjects\FarmEasy\image\product-4.png" alt="">
-                    <h3> Cabbage</h3>
-                    <div class="price">Rs 60/-</div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <a href="#" class="btn">Add to cart</a>
-                </div>
-
-                <div class="box" id="fifth_product">
-                    <img src="C:\Users\Dell\PycharmProjects\FarmEasy\image\product-5.png" alt="">
-                    <h3>Potato </h3>
-                    <div class="price">Rs 40/-</div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <a href="#" class="btn">Add to cart</a>
-                </div>
-
-                <div class="box" id="sixth_product">
-                    <img src="C:\Users\Dell\PycharmProjects\FarmEasy\image\product-6.png" alt="">
-                    <h3>Fresh Avacado</h3>
-                    <div class="price">Rs 100/-</div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <a href="#" class="btn">Add to cart</a>
-                </div>
-            </div>
-            <div class="container">
-                <div class="box"  id="seventh_product">
-                    <img src="C:\Users\Dell\PycharmProjects\FarmEasy\image\product-7.png" alt="">
-                    <h3>Fresh carrot</h3>
-                    <div class="price">Rs 60/-</div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <a href="#" class="btn">Add to cart</a>
-                </div>
-
-                <div class="box" id="eighth_product">
-                    <img src="C:\Users\Dell\PycharmProjects\FarmEasy\image\product-8.png" alt="">
-                    <h3> Lemon</h3>
-                    <div class="price">Rs 60/-</div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <a href="#" class="btn">Add to cart</a>
-                </div>
-
-                
-                <div class="box" id="ninth_product">
-                    <img src="C:\Users\Dell\PycharmProjects\FarmEasy\image\milk.jpg" alt="">
-                    <h3> Milk</h3>
-                    <div class="price">Rs 60/-</div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <a href="#" class="btn">Add to cart</a>
-                </div>
-            </div>
-            <div class="container">
-                <div class="box"  id="tenth_product">
-                    <img src="C:\Users\Dell\PycharmProjects\FarmEasy\image\eggs.jpg" alt="">
-                    <h3> Eggs</h3>
-                    <div class="price">Rs 60/-</div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <a href="#" class="btn">Add to cart</a>
-                </div>
-                
-                <div class="box" id="eleventh_product">
-                    <img src="C:\Users\Dell\PycharmProjects\FarmEasy\image\spinach.jpg" alt="">
-                    <h3> Spinach</h3>
-                    <div class="price">Rs 60/-</div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <a href="#" class="btn">Add to cart</a>
-                </div>
-
-                
-                <div class="box" id="twelth_product">
-                    <img src="C:\Users\Dell\PycharmProjects\FarmEasy\image\apple.jpg" alt="">
-                    <h3> Apple</h3>
-                    <div class="price">Rs 80/-</div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <a href="#" class="btn">Add to cart</a>
-                </div>
-            </div>
-            <div class="container">
-                <div class="box"  id="thirteenth_product">
-                    <img src="C:\Users\Dell\PycharmProjects\FarmEasy\image\banana.jpg" alt="">
-                    <h3> Banana</h3>
-                    <div class="price">Rs 40/-</div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <a href="#" class="btn">Add to cart</a>
-                </div>
-                
-                
-                <div class="box" id="fourteenth_product">
-                    <img src="C:\Users\Dell\PycharmProjects\FarmEasy\image\cucumber.jpg" alt="">
-                    <h3> Cucumber</h3>
-                    <div class="price">Rs 30/-</div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <a href="#" class="btn">Add to cart</a>
-                </div>
-
-                
-                <div class="box" id="fifteenth_product">
-                    <img src="C:\Users\Dell\PycharmProjects\FarmEasy\image\bread.jpg" alt="">
-                    <h3> Bread</h3>
-                    <div class="price">Rs 20/-</div>
+                <div class="container">                
+                <div class="box" id={{ i[0] }}>
+                    <img src="{{ i[3] }}" alt="">
+                    <h3>{{ i[2] }}</h3>
+                    <h3 style="font-size: small;">{{ i[1] }}</h3>
+                    <div class="price">{{ i[4] }}</div>
                     <div class="stars">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -475,7 +170,8 @@
             </div>
             </div>
             </div>
-        </div>
+            {% endfor %}
+    </div>
 
 
     </section>
