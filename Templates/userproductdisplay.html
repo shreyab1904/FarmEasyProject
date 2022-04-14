@@ -22,7 +22,7 @@
             }
 
             .btn:hover{
-                background: var(--orange);
+                background: var(--green);
                 color:rgb(255, 255, 255);
             }
             .products .product-slider{
@@ -66,14 +66,14 @@
 
             .products .product-slider .box i{
                 font-size: 1.7rem;
-                color:var(--orange);
+                color:var(--green);
                 padding:.5rem 0;
             }
 
             :root{
-                --orange:#ff7800;
+                --green:#037f30;
                 --black:#130f40;
-                --light-color:#666;
+                --light-color:--black;
                 --box-shadow:0 .5rem 1.5rem rgba(0,0,0,.1);
                 --border:.2rem solid rgba(0,0,0,.1);
                 --outline:.1rem solid rgba(0,0,0,.1);
@@ -152,7 +152,11 @@
                     <h3>{{ i[2] }}</h3>
                     <h3 style="font-size: small;">{{ i[1] }}</h3>
                     <div class="price" style="font-size: medium;">{{ i[4] }}</div>
+<<<<<<< HEAD
                     <p class ="product-quantity" style="font-size: medium; text-align: center; width: 40 px; padding: 5px; margin-left: 1cm;">Quantity : <input value="ADD" type="number" id="quantity" name="quantity" min="1" max="5"></p>
+=======
+                    <p class ="product-quantity" style="font-size: medium; text-align: center; width: 40 px; padding: 5px; margin-left: 0.5cm; background-color: white;">Quantity : <input style="text-align: center;" value="1" type="number" name="quantity" min="1" max="50" class="form-control"></p>
+>>>>>>> 3d1f274220ef4ca16466b451dec03deedbb2b87d
                     <a href="#" class="btn">Add to cart</a>
                     </div>
                 </div>
