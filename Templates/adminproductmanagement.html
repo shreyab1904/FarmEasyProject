@@ -1,0 +1,34 @@
+{% extends "adminbase.html" %}
+{% block content %}
+
+<h3 style="text-align: center; margin-top: 1%; font-size: xx-large; color: white;">PRODUCT MANAGEMENT FLOW</h3>
+<hr style="color: white;">
+
+<nav class="navbar navbar-expand-lg navbar-dark shadow-5-strong">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav ">
+          <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/productentry">Add Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/orderview">Search</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/trackingstatus">Edit</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/trackingstatus">Delete</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav> 
+
+{% endblock %}

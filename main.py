@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-from flask import Flask
-print('FarmEasy is in the process')
-=======
 import flask
 from flask import Flask, render_template, request, redirect, session
 from flask_session import Session
@@ -37,8 +33,8 @@ else:
 print("Table Product has created")
 
 @app.route("/")
-def index():
-    return render_template("/index.html")
+def homepage():
+    return render_template("/homepage.html")
 
 @app.route("/userlogin", methods=['GET', 'POST'])
 def userlogin():
@@ -107,12 +103,20 @@ def adminlogin():
         getpass = request.form["pass"]
     try:
         if getname == 'admin' and getpass == "12345":
-            return redirect("/productentry")
+            return redirect("/dashboard")
         else:
             print("Invalid username and password")
     except Exception as e:
         print(e)
     return render_template("/adminlogin.html")
+
+@app.route("/dashboard")
+def admindashoard():
+    return render_template("/admindashboard.html")
+    
+@app.route("/productmanagement")
+def adminproductmanagement():
+    return render_template("/adminproductmanagement.html")
 
 @app.route("/productentry", methods = ['GET','POST'])
 def adminproductentry():
@@ -157,4 +161,4 @@ def convertToBinaryData(filename):
 
 if __name__ == "__main__":
     app.run(debug=True)
->>>>>>> 66f3a51c00ee00021a8ac4e10a738f851c0d1bc4
+
