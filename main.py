@@ -3,8 +3,8 @@ from flask import Flask, render_template, request, redirect, session, url_for
 from flask_session import Session
 from instamojo_wrapper import Instamojo
 
-API_KEY = "test_8076ff9084c36cac427add7e5dd"
-AUTH_TOKEN = "test_4fd43e635b60842191ef8f36abc"
+API_KEY = "test_ae0ed2ba0300671b76829da7965"
+AUTH_TOKEN = "test_4da4849c457db419475e7b97b4c"
 api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN, endpoint='https://test.instamojo.com/api/1.1/')
 import sqlite3
 
