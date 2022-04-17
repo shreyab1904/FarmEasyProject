@@ -28,7 +28,7 @@ if listOfTables1!=[]:
 else:
     conn.execute(''' CREATE TABLE PRODUCT(
                         ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        bname TEXT, pname TEXT, category TEXT, image BLOB,
+                        productid TEXT, bname TEXT, pname TEXT, category TEXT, image BLOB,
                         price TEXT); ''')
 print("Table Product has created")
 
@@ -95,7 +95,6 @@ def usersignup():
 def userpaymentpage():
     return render_template("/userpaymentpage.html")
 
-
 @app.route("/adminlogin", methods = ['GET','POST'])
 def adminlogin():
     if request.method == 'POST':
@@ -116,17 +115,28 @@ def admindashoard():
     
 @app.route("/productmanagement")
 def adminproductmanagement():
-    return render_template("/adminproductmanagement.html")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM PRODUCT")
+    result = cursor.fetchall()
+    return render_template("/adminproductmanagement.html", product = result)
+
+def convertToBinaryData(filename):
+    # Convert digital data to binary format
+    with open(filename, 'rb') as file:
+        blobData = file.read()
+    return blobData
 
 @app.route("/productentry", methods = ['GET','POST'])
 def adminproductentry():
     if request.method == 'POST':
+        getpid = request.form['pid']
         getbname = request.form['bname']
         getpname = request.form['pname']
         getcategory = request.form['category']
-        getimage = request.form['image']
+        getimage = request.files['img']
         getprice = request.form['price']
 
+        print(getpid)
         print(getbname)
         print(getpname)
         print(getcategory)
@@ -134,9 +144,11 @@ def adminproductentry():
         print(getprice)
 
     try:
-        query = "INSERT INTO PRODUCT(bname, pname, category, image, price)VALUES(?, ?, ?, ?, ?)"
-        photo = convertToBinaryData(getimage)
-        data = (getbname, getpname, getcategory, photo, getprice)
+        if getimage.filename != '':
+            getimage.save(getimage.filename)
+        photo = convertToBinaryData(getimage.filename)
+        query = "INSERT INTO PRODUCT(productid, bname, pname, category, image, price)VALUES(?, ?, ?, ?, ?, ?)"
+        data = (getpid, getbname, getpname, getcategory, photo, getprice)
         cursor.execute(query, data)
         conn.commit()
         print("SUCCESSFULLY ADDED!")
@@ -145,20 +157,81 @@ def adminproductentry():
 
     return render_template("/adminproductentry.html")
 
+def writeTofile(data, filename):
+    # Convert binary data to proper format and write it on Hard Disk
+    with open(filename, 'wb') as file:
+        file.write(data)
+
 @app.route("/productdisplay", methods = ['GET','POST'])
 def userproductdisplay():
     cursor = conn.cursor()
-    query="SELECT * FROM PRODUCT"
-    cursor.execute(query)
+    query = cursor.execute("SELECT * FROM PRODUCT")
     result = cursor.fetchall()
+    for x in result:
+        pname = x[3]
+        image = x[5]
+
+    photopath = "C:\\Users\\yashi\\PycharmProjects\\FarmEasy\\uploads\\" + pname + ".png"
+    print(photopath)
+    writeTofile(image, photopath)
 
     return render_template("/userproductdisplay.html",product = result)
 
-def convertToBinaryData(filename):
-    with open(filename, 'rb') as file:
-        blobData = file.read()
-    return blobData
+@app.route('/delete/<getpid>/', methods = ['GET', 'POST'])
+def delete(getpid):
+    data = "DELETE FROM PRODUCT WHERE productid='"+getpid+"'"
+    cursor.execute(data)
+    conn.commit()
+    return redirect("/productmanagement")
 
+@app.route("/update/<getpid>/", methods = ['GET', 'POST'])
+def update(getpid):
+    data = cursor.execute("SELECT * FROM PRODUCT WHERE productid = '"+getpid+"'")
+    result = cursor.fetchall()
+    if len(result) == 0:
+        print("Invalid Data")
+    else:
+        if request.method == 'POST':
+            getpid = request.form['pid']
+            getbname = request.form['bname']
+            getpname = request.form['pname']
+            getcategory = request.form['category']
+            getimage = request.files['img']
+            getprice = request.form['price']
+
+        try:
+            query = "UPDATE PRODUCT SET productid = '"+getpid+"', bname = '"+getbname+"', pname = '"+getpname+"', category ='"+getcategory+"', image='"+getimage+"', price = '"+getprice+"'"
+            cursor.execute(query)
+            result = cursor.fetchall()
+            conn.commit()
+            return redirect("/productmanagement")
+
+        except Exception as e:
+            print(e)
+
+        return render_template("/update.html", product = result)
+
+@app.route("/search", methods = ['GET','POST'])
+def search():
+    if request.method == "POST":
+        getpid = request.form["pid"]
+        print(getpid)
+        try:
+            query = "SELECT * FROM PRODUCT WHERE productid="+getpid
+            cursor.execute(query)
+            print("SUCCESSFULLY SELECTED!")
+            result = cursor.fetchall()
+            print(result)
+            if len(result) == 0:
+                print("Invalid Product")
+            else:
+                return render_template("search.html", product=result, status = True)
+
+        except Exception as e:
+            print(e)
+
+    return render_template("search.html", product=[], status = False)
+    
 if __name__ == "__main__":
     app.run(debug=True)
 
