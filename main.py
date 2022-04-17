@@ -1,6 +1,12 @@
 import flask
 from flask import Flask, render_template, request, redirect, session
 from flask_session import Session
+
+from instamojo_wrapper import Instamojo
+
+API_KEY = "test_8076ff9084c36cac427add7e5dd"
+AUTH_TOKEN = "test_4fd43e635b60842191ef8f36abc"
+api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN, endpoint='https://test.instamojo.com/api/1.1/')
 import sqlite3
 
 app = Flask(__name__)
@@ -10,10 +16,10 @@ Session(app)
 
 conn = sqlite3.connect("database.db", check_same_thread=False)
 cursor = conn.cursor()
-listOfTables= conn.execute("SELECT name from sqlite_master WHERE type='table' AND name='USER'").fetchall()
+listOfTables = conn.execute("SELECT name from sqlite_master WHERE type='table' AND name='USER'").fetchall()
 listOfTables1 = conn.execute("SELECT name from sqlite_master WHERE type='table' AND name='PRODUCT'").fetchall()
 
-if listOfTables!=[]:
+if listOfTables != []:
     print("Table User Already Exists ! ")
 else:
     conn.execute(''' CREATE TABLE USER(
@@ -23,7 +29,7 @@ else:
                             confirmpassword TEXT); ''')
 print("Table User has created")
 
-if listOfTables1!=[]:
+if listOfTables1 != []:
     print("Product Table Already exists ! ")
 else:
     conn.execute(''' CREATE TABLE PRODUCT(
@@ -32,9 +38,11 @@ else:
                         price TEXT); ''')
 print("Table Product has created")
 
+
 @app.route("/")
 def homepage():
     return render_template("/homepage.html")
+
 
 @app.route("/userlogin", methods=['GET', 'POST'])
 def userlogin():
@@ -61,9 +69,9 @@ def userlogin():
 
     return render_template("/userlogin.html")
 
-@app.route("/usersignup", methods = ['GET','POST'])
-def usersignup():
 
+@app.route("/usersignup", methods=['GET', 'POST'])
+def usersignup():
     if request.method == 'POST':
         getfirstname = request.form['firstname']
         getlastname = request.form['lastname']
@@ -82,7 +90,8 @@ def usersignup():
         print(getcnfpass)
 
     try:
-        query = cursor.execute("INSERT INTO USER(firstname,lastname,DOB,email,phone,password,confirmpassword)VALUES('"+getfirstname+"','"+getlastname+"','"+getDOB+"','"+getemail+"','"+getphone+"','"+getpass+"','"+getcnfpass+"')")
+        query = cursor.execute(
+            "INSERT INTO USER(firstname,lastname,DOB,email,phone,password,confirmpassword)VALUES('" + getfirstname + "','" + getlastname + "','" + getDOB + "','" + getemail + "','" + getphone + "','" + getpass + "','" + getcnfpass + "')")
         conn.commit()
         print("SUCCESSFULLY ADDED")
         return redirect("/userlogin")
@@ -91,7 +100,8 @@ def usersignup():
 
     return render_template("/usersignup.html")
 
-@app.route("/adminlogin", methods = ['GET','POST'])
+
+@app.route("/adminlogin", methods=['GET', 'POST'])
 def adminlogin():
     if request.method == 'POST':
         getname = request.form["name"]
@@ -105,16 +115,19 @@ def adminlogin():
         print(e)
     return render_template("/adminlogin.html")
 
+
 @app.route("/dashboard")
 def admindashoard():
     return render_template("/admindashboard.html")
-    
+
+
 @app.route("/productmanagement")
 def adminproductmanagement():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM PRODUCT")
     result = cursor.fetchall()
-    return render_template("/adminproductmanagement.html", product = result)
+    return render_template("/adminproductmanagement.html", product=result)
+
 
 def convertToBinaryData(filename):
     # Convert digital data to binary format
@@ -122,7 +135,8 @@ def convertToBinaryData(filename):
         blobData = file.read()
     return blobData
 
-@app.route("/productentry", methods = ['GET','POST'])
+
+@app.route("/productentry", methods=['GET', 'POST'])
 def adminproductentry():
     if request.method == 'POST':
         getpid = request.form['pid']
@@ -153,12 +167,14 @@ def adminproductentry():
 
     return render_template("/adminproductentry.html")
 
+
 def writeTofile(data, filename):
     # Convert binary data to proper format and write it on Hard Disk
     with open(filename, 'wb') as file:
         file.write(data)
 
-@app.route("/productdisplay", methods = ['GET','POST'])
+
+@app.route("/productdisplay", methods=['GET', 'POST'])
 def userproductdisplay():
     cursor = conn.cursor()
     query = cursor.execute("SELECT * FROM PRODUCT")
@@ -171,18 +187,20 @@ def userproductdisplay():
     print(photopath)
     writeTofile(image, photopath)
 
-    return render_template("/userproductdisplay.html",product = result)
+    return render_template("/userproductdisplay.html", product=result)
 
-@app.route('/delete/<getpid>/', methods = ['GET', 'POST'])
+
+@app.route('/delete/<getpid>/', methods=['GET', 'POST'])
 def delete(getpid):
-    data = "DELETE FROM PRODUCT WHERE productid='"+getpid+"'"
+    data = "DELETE FROM PRODUCT WHERE productid='" + getpid + "'"
     cursor.execute(data)
     conn.commit()
     return redirect("/productmanagement")
 
-@app.route("/update/<getpid>/", methods = ['GET', 'POST'])
+
+@app.route("/update/<getpid>/", methods=['GET', 'POST'])
 def update(getpid):
-    data = cursor.execute("SELECT * FROM PRODUCT WHERE productid = '"+getpid+"'")
+    data = cursor.execute("SELECT * FROM PRODUCT WHERE productid = '" + getpid + "'")
     result = cursor.fetchall()
     if len(result) == 0:
         print("Invalid Data")
@@ -196,7 +214,7 @@ def update(getpid):
             getprice = request.form['price']
 
         try:
-            query = "UPDATE PRODUCT SET productid = '"+getpid+"', bname = '"+getbname+"', pname = '"+getpname+"', category ='"+getcategory+"', image='"+getimage+"', price = '"+getprice+"'"
+            query = "UPDATE PRODUCT SET productid = '" + getpid + "', bname = '" + getbname + "', pname = '" + getpname + "', category ='" + getcategory + "', image='" + getimage + "', price = '" + getprice + "'"
             cursor.execute(query)
             result = cursor.fetchall()
             conn.commit()
@@ -205,15 +223,16 @@ def update(getpid):
         except Exception as e:
             print(e)
 
-        return render_template("/update.html", product = result)
+        return render_template("/update.html", product=result)
 
-@app.route("/search", methods = ['GET','POST'])
+
+@app.route("/search", methods=['GET', 'POST'])
 def search():
     if request.method == "POST":
         getpid = request.form["pid"]
         print(getpid)
         try:
-            query = "SELECT * FROM PRODUCT WHERE productid="+getpid
+            query = "SELECT * FROM PRODUCT WHERE productid=" + getpid
             cursor.execute(query)
             print("SUCCESSFULLY SELECTED!")
             result = cursor.fetchall()
@@ -221,54 +240,94 @@ def search():
             if len(result) == 0:
                 print("Invalid Product")
             else:
-                return render_template("search.html", product=result, status = True)
+                return render_template("search.html", product=result, status=True)
 
         except Exception as e:
             print(e)
 
-    return render_template("search.html", product=[], status = False)
+    return render_template("search.html", product=[], status=False)
 
-@app.route("/display-snacks", methods = ['GET','POST'])
+
+@app.route("/display-snacks", methods=['GET', 'POST'])
 def snacks():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM PRODUCT WHERE category='Snacks'")
     result = cursor.fetchall()
-    return render_template("/userproductdisplay.html", product = result)
+    return render_template("/userproductdisplay.html", product=result)
 
-@app.route("/display-beverages", methods = ['GET','POST'])
+
+@app.route("/display-beverages", methods=['GET', 'POST'])
 def beverages():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM PRODUCT WHERE category='Beverages'")
     result = cursor.fetchall()
-    return render_template("/userproductdisplay.html", product = result)
+    return render_template("/userproductdisplay.html", product=result)
 
-@app.route("/display-bakery", methods = ['GET','POST'])
+
+@app.route("/display-bakery", methods=['GET', 'POST'])
 def bakery():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM PRODUCT WHERE category='Bakery'")
     result = cursor.fetchall()
-    return render_template("/userproductdisplay.html", product = result)
+    return render_template("/userproductdisplay.html", product=result)
 
-@app.route("/display-fruits", methods = ['GET','POST'])
+
+@app.route("/display-fruits", methods=['GET', 'POST'])
 def fruits():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM PRODUCT WHERE category='Fruits'")
     result = cursor.fetchall()
-    return render_template("/userproductdisplay.html", product = result)
+    return render_template("/userproductdisplay.html", product=result)
 
-@app.route("/display-vegetables", methods = ['GET','POST'])
+
+@app.route("/display-vegetables", methods=['GET', 'POST'])
 def vegetables():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM PRODUCT WHERE category='Vegetables'")
     result = cursor.fetchall()
-    return render_template("/userproductdisplay.html", product = result)
+    return render_template("/userproductdisplay.html", product=result)
 
-@app.route("/display-nonveg", methods = ['GET','POST'])
+
+@app.route("/display-nonveg", methods=['GET', 'POST'])
 def nonveg():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM PRODUCT WHERE category='Nonveg'")
     result = cursor.fetchall()
-    return render_template("/userproductdisplay.html", product = result)
+    return render_template("/userproductdisplay.html", product=result)
+
+@app.route('/payment')
+def home():
+    return render_template('payment.html')
+
+
+@app.route('/success')
+def success():
+    return render_template('success.html')
+
+
+@app.route('/pay', methods=['POST', 'GET'])
+def pay():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        purpose = request.form.get('purpose')
+        email = request.form.get('email')
+        amount = request.form.get('amount')
+
+        response = api.payment_request_create(
+            amount=amount,
+            purpose=purpose,
+            buyer_name=name,
+            send_email=True,
+            email=email,
+            redirect_url="http://localhost:5000/success"
+        )
+
+        return redirect(response['payment_request']['longurl'])
+
+    else:
+
+        return redirect('/')
+
+
 if __name__ == "__main__":
     app.run(debug=True)
-
