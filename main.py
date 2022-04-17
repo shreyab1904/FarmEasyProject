@@ -1,7 +1,6 @@
 import flask
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, url_for
 from flask_session import Session
-
 from instamojo_wrapper import Instamojo
 
 API_KEY = "test_8076ff9084c36cac427add7e5dd"
@@ -40,9 +39,8 @@ print("Table Product has created")
 
 
 @app.route("/")
-def homepage():
-    return render_template("/homepage.html")
-
+def index():
+    return render_template("/index.html")
 
 @app.route("/userlogin", methods=['GET', 'POST'])
 def userlogin():
@@ -299,11 +297,9 @@ def nonveg():
 def home():
     return render_template('payment.html')
 
-
 @app.route('/success')
 def success():
     return render_template('success.html')
-
 
 @app.route('/pay', methods=['POST', 'GET'])
 def pay():
@@ -321,11 +317,8 @@ def pay():
             email=email,
             redirect_url="http://localhost:5000/success"
         )
-
         return redirect(response['payment_request']['longurl'])
-
     else:
-
         return redirect('/')
 
 
