@@ -1,0 +1,56 @@
+{% extends "adminbase.html" %}
+{% block content %}
+
+<h3 style="text-align: center; margin-top: 1% ; color: white;">SEARCH PRODUCT</h3>
+<hr style="color: white;">
+<div class="container container">
+    <div class="row">
+        <div class="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12"></div>
+        <form action="/search" method="post">
+            <table class="table table-borderless" style="color: white;">
+            <tr>
+                <td>Product-ID </td>
+                <td><input name = "pid" type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button class="btn btn-success" type="submit">SEARCH</button></td>
+            </tr>
+        </table>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+            {% if status %}
+            <table class="table table-striped table-light table-bordered table-hover" >
+              <thead>
+                <tr>
+                  <th scope="col">Product ID</th>
+                  <th scope="col">Brand Name</th>
+                  <th scope="col">Product Name</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in product %}
+                <tr>
+                    <th scope="row">{{ i[1] }}</th>
+                    <td>{{ i[2] }}</td>
+                    <td>{{ i[3] }}</td>
+                    <td>{{ i[4] }}</td>
+                    <td>{{ i[6] }}</td>
+                </tr>
+                {% endfor %}
+
+              </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,31 +1,32 @@
 {% extends "adminbase.html" %}
 {% block content %}
 
-
 <hr style="color: white;">
-<h3 style="text-align: center; margin-top: 1% ; color: white;">ADD PRODUCT</h3>
+
+<h3 style="text-align: center; margin-top: 1% ; color: white;">UPDATE PRODUCT</h3>
     <hr style="color: white;">
     <div class="container">
         <div class="row">
             <div class="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-            <form action="/productentry" method="post" enctype="multipart/form-data">
+            <form action="/update" method="post" enctype="multipart/form-data">
                 <table class="table table-borderless" style="color: white;">
+                    {% for i in product %}
                     <tr>
                     <td>Product-ID : </td>
-                    <td><input name="pid" type="text" class="form-control" style="border-radius: 20px;"></td>
+                    <td><input value = {{ i[1] }} name="pid" type="text" class="form-control" style="border-radius: 20px;"></td>
                   </tr>
                     <tr>
                         <td>Brand Name : </td>
-                        <td><input name="bname" type="text" class="form-control" style="border-radius: 20px;"></td>
+                        <td><input value = {{ i[2] }} name="bname" type="text" class="form-control" style="border-radius: 20px;"></td>
                     </tr>
                     <tr>
                         <td>Product Name : </td>
-                        <td><input name="pname" type="text" class="form-control" style="border-radius: 20px;"></td>
+                        <td><input value = {{ i[3] }} name="pname" type="text" class="form-control" style="border-radius: 20px;"></td>
                     </tr>
                     <tr>
                         <td>Category : </td>
                         <td>
-                            <select name="category" class="form-control" style="border-radius: 20px;">
+                            <select value = {{ i[4] }} name="category" class="form-control" style="border-radius: 20px;">
                                 <option value="Snacks">Snacks</option>
                                 <option value="Beverages">Beverages</option>
                                 <option value="Bakery">Bakery</option>
@@ -37,16 +38,17 @@
                     </tr>
                     <tr>
                         <td>Image Source : </td>
-                        <td><input name="img" type="file" class="form-control" style="border-radius: 20px; "></td>
+                        <td><input value = {{ i[5] }} name="img" type="file" class="form-control" style="border-radius: 20px; "></td>
                     </tr>
                     <tr>
                         <td>Price :  </td>
-                        <td><input name="price" type="text" class="form-control" style="border-radius: 20px;"></td>
+                        <td><input value = {{ i[6] }} name="price" type="text" class="form-control" style="border-radius: 20px;"></td>
                     </tr>
                   <tr>
                     <td></td>
-                    <td><button class="btn btn-success" type="submit">UPLOAD</button></td>
+                    <td><button class="btn btn-success" type="submit">UPDATE</button></td>
                 </tr>
+                {% endfor %}
                 </table>
             </form>
             </div>
