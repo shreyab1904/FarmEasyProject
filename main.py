@@ -91,10 +91,6 @@ def usersignup():
 
     return render_template("/usersignup.html")
 
-@app.route("/payment")
-def userpaymentpage():
-    return render_template("/userpaymentpage.html")
-
 @app.route("/adminlogin", methods = ['GET','POST'])
 def adminlogin():
     if request.method == 'POST':
@@ -231,7 +227,48 @@ def search():
             print(e)
 
     return render_template("search.html", product=[], status = False)
-    
+
+@app.route("/display-snacks", methods = ['GET','POST'])
+def snacks():
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM PRODUCT WHERE category='Snacks'")
+    result = cursor.fetchall()
+    return render_template("/userproductdisplay.html", product = result)
+
+@app.route("/display-beverages", methods = ['GET','POST'])
+def beverages():
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM PRODUCT WHERE category='Beverages'")
+    result = cursor.fetchall()
+    return render_template("/userproductdisplay.html", product = result)
+
+@app.route("/display-bakery", methods = ['GET','POST'])
+def bakery():
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM PRODUCT WHERE category='Bakery'")
+    result = cursor.fetchall()
+    return render_template("/userproductdisplay.html", product = result)
+
+@app.route("/display-fruits", methods = ['GET','POST'])
+def fruits():
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM PRODUCT WHERE category='Fruits'")
+    result = cursor.fetchall()
+    return render_template("/userproductdisplay.html", product = result)
+
+@app.route("/display-vegetables", methods = ['GET','POST'])
+def vegetables():
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM PRODUCT WHERE category='Vegetables'")
+    result = cursor.fetchall()
+    return render_template("/userproductdisplay.html", product = result)
+
+@app.route("/display-nonveg", methods = ['GET','POST'])
+def nonveg():
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM PRODUCT WHERE category='Nonveg'")
+    result = cursor.fetchall()
+    return render_template("/userproductdisplay.html", product = result)
 if __name__ == "__main__":
     app.run(debug=True)
 

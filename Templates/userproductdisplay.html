@@ -8,8 +8,22 @@
     <title>Product Page</title>
 </head>
 <body>
+
     <h3 style="text-align: center; margin-top: 1%; font-size: xx-large;">PRODUCT PAGE</h3>
     <hr>
+    <div class="dropdown mt-3">
+        <button class="btn btn-success dropdown-toggle" type="button" id="book-dropdown" data-bs-toggle="dropdown" style="margin-left: 3.5cm; margin-top: 0.5cm;">
+          Categories
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="book-dropdown">
+          <li><a class="dropdown-item" href="/display-snacks">Snacks</a></li>
+          <li><a class="dropdown-item" href="/display-beverages">Beverages</a></li>
+          <li><a class="dropdown-item" href="/display-bakery">Bakery</a></li>
+          <li><a class="dropdown-item" href="/display-fruits">Fruits</a></li>
+          <li><a class="dropdown-item" href="/display-vegetables">Vegetables</a></li>
+          <li><a class="dropdown-item" href="/display-nonveg">Eggs, Meat and Fish</a></li>
+        </ul>
+      </div>
     <div class="container">
         <div class="row">
             {% for i in product %}
