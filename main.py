@@ -309,13 +309,13 @@ def success():
 def pay():
     if request.method == 'POST':
         name = request.form.get('name')
-        purpose = request.form.get('purpose')
+        product = request.form.get('product')
         email = request.form.get('email')
         amount = request.form.get('amount')
 
         response = api.payment_request_create(
             amount=amount,
-            purpose=purpose,
+            purpose=product,
             buyer_name=name,
             send_email=True,
             email=email,
@@ -327,7 +327,6 @@ def pay():
     else:
 
         return redirect('/')
-
 
 if __name__ == "__main__":
     app.run(debug=True)
