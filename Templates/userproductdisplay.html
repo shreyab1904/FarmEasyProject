@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Page</title>
 </head>
-<body>
+<body style="background: url(https://images.pexels.com/photos/1640773/pexels-photo-1640773.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1) no-repeat; background-attachment: fixed; background-size: 100%;">
 
     <h3 style="text-align: center; margin-top: 1%; font-size: xx-large;">PRODUCT PAGE</h3>
     <hr>
@@ -28,7 +28,7 @@
         <div class="row">
             {% for i in product %}
                 <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
-                  <form action="/cart" method="post">
+                  <form action="/userproductdisplay" method="post">
                     <div class="card" style="width: 16rem; margin-top: 1cm; border-radius: 20px;">
                       <img class="card-img-top" src="{{ i[5] }}" alt="">
                       <div class="card-body">
@@ -39,7 +39,7 @@
                         <li class="list-group-item">Price : {{ i[6] }}</li>
                         <p class ="product-quantity" style="font-size: medium; float: left; width: 10 px; padding: 5px; background-color: white;">Quantity : <input style="text-align: center;" value="1" type="number" name="quantity" min="1" max="50"></p>
                       </ul>
-                      <a style="border-radius: 20px;" href="/cart" class="btn btn-success">Add to Cart</a>
+                      <a style="border-radius: 20px;" href="#" class="btn btn-success">Add to Cart</a>
                   </form>
             </div>
         </div>

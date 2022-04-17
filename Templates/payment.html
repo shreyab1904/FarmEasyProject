@@ -9,50 +9,56 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="text-center">farmeasy Payment</h1>
+      <br>
+      <h1 class="text-center">Farmeasy Payment</h1>
+      <br>
       <form action="/pay" method="POST">
         <div class="form-group">
           <input
             type="text"
             class="form-control"
+            style="border-radius: 20px;"
             required
             name="name"
             id=""
-            placeholder="name"
+            placeholder="Name"
           />
         </div>
         <div class="form-group">
             <input
               type="text"
               class="form-control"
+              style="border-radius: 20px;"
               required
               name="product"
               id=""
-              placeholder="product"
+              placeholder="Purpose"
             />
           </div>
         <div class="form-group">
           <input
             type="email"
             class="form-control"
+            style="border-radius: 20px;"
             required
             name="email"
             id=""
-            placeholder="email"
+            placeholder="Email-ID"
           />
         </div>
         <div class="form-group">
             <input
               type="number"
               class="form-control"
+              style="border-radius: 20px;"
               required
               name="amount"
               id=""
-              placeholder="amount"
+              placeholder="Amount"
             />
           </div>
         <div class="form-group">
-            <button class="btn btn-danger btn-block">
+            <button class="btn btn-success btn-block" style="border-radius: 20px;">
                 Create Payment Link
             </button>
         </div>

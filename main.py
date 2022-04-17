@@ -39,8 +39,8 @@ print("Table Product has created")
 
 
 @app.route("/")
-def index():
-    return render_template("/index.html")
+def homepage():
+    return render_template("/homepage.html")
 
 @app.route("/userlogin", methods=['GET', 'POST'])
 def userlogin():
