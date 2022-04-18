@@ -6,12 +6,124 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Page</title>
-</head>
-<body style="background: url(https://images.pexels.com/photos/1640773/pexels-photo-1640773.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1) no-repeat; background-attachment: fixed; background-size: 100%;">
 
-    <h3 style="text-align: center; margin-top: 1%; font-size: xx-large;">PRODUCT PAGE</h3>
-    <hr>
-    <div class="dropdown mt-3">
+    <style>
+                  @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+          body{
+              font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+          }
+          *{
+              margin: 0;
+              padding: 0;
+              list-style: none;
+              text-decoration: none;
+          }
+          .sidebar{
+              position: fixed;
+              left: 0;
+              width: 250px;
+              height: 100%;
+              background: #025a29;
+          }
+          .sidebar header{
+              font-size: 22px;
+              color: white;
+              text-align: center;
+              line-height: 70px;
+              background: #1a9e95;
+              user-select: none;
+          }
+          .sidebar ul a{
+              display: block;
+              height: 100%;
+              width: 100%;
+              line-height: 40px;
+              font-size: 20px;
+              color: white;
+              padding-left: 40px;
+              box-sizing: border-box;
+              border-top: 1px solid rgba(255,255,255,.1);
+              border-bottom: 1px solid black;
+          }
+          ul li:hover a{
+              padding-left: 50px;
+          }
+          .sidebar ul a i{
+            margin-right: 16px;
+          }
+
+
+          body{
+            width: 100%;
+            overflow-x:hidden;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        #header{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 55px;
+            background: #ffffff;
+        }
+        #navbar{
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #navbar li{
+            list-style: none;
+            padding: 0 15px;
+        }
+        #navbar li a{
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+            transition: 0.3s ease;
+        }
+        #navbar li a:hover{
+            color: #088178;
+        }
+    </style>
+    
+</head>
+<body style="background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXZuj8D0jC20_ZT7pcQmNumQftrhhMTFn2WA&usqp=CAU) no-repeat; background-attachment: fixed; background-size: 100%;">
+
+
+  <section id="header">
+    <h3>FarmEasy</h3>
+    <div>
+        <ul id="navbar">
+            <li><a href="/">Home</a></li>
+            <!-- <li><a href="/userlogin">Login</a></li>
+            <li><a href="/usersignup">Sign Up</a></li> -->
+            <li><a href="/search"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+            <li><a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
+            <li><a href="#">Logout</a></li> 
+
+        </ul>
+    </div>
+
+</section>
+<div class="sidebar">
+    <!-- <header>FarmEasy</header> -->
+    <ul>
+        <li><a href="/display-snacks">Snacks</a></li>
+        <li><a href="/display-beverages">Beverages</a></li>
+        <li><a href="/display-bakery">Bakery</a></li>
+        <li><a href="/display-fruits">Fruits</a></li>
+        <li><a href="/display-vegetables">Vegetables</a></li>
+        <li><a href="/display-nonveg">Eggs,Meat,Fish</a></li>
+    </ul>
+</div>
+
+
+
+    <!-- <h3 style="text-align: center; margin-top: 1%; font-size: xx-large;">PRODUCT PAGE</h3> -->
+    
+    <!-- <div class="dropdown mt-3">
         <button class="btn btn-success dropdown-toggle" type="button" id="book-dropdown" data-bs-toggle="dropdown" style="margin-left: 3.5cm; margin-top: 0.5cm;">
           Categories
         </button>
@@ -23,7 +135,8 @@
           <li><a class="dropdown-item" href="/display-vegetables">Vegetables</a></li>
           <li><a class="dropdown-item" href="/display-nonveg">Eggs, Meat and Fish</a></li>
         </ul>
-      </div>
+      </div> -->
+      <section>
     <div class="container">
         <div class="row">
             {% for i in product %}
@@ -46,6 +159,7 @@
             {% endfor %}
     </div>
     </div>
+</section>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
