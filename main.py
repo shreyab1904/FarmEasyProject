@@ -1,6 +1,7 @@
 import flask
 from flask import Flask, render_template, request, redirect, session, url_for
 from flask_session import Session
+import os.path
 from instamojo_wrapper import Instamojo
 
 API_KEY = "test_ae0ed2ba0300671b76829da7965"
@@ -12,6 +13,7 @@ app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
+app.config['UPLOAD_FOLDER'] = "static/uploads"
 
 conn = sqlite3.connect("database.db", check_same_thread=False)
 cursor = conn.cursor()
@@ -33,7 +35,7 @@ if listOfTables1 != []:
 else:
     conn.execute(''' CREATE TABLE PRODUCT(
                         ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        productid TEXT, bname TEXT, pname TEXT, category TEXT, image BLOB,
+                        productid TEXT, bname TEXT, pname TEXT, category TEXT, image TEXT,
                         price TEXT); ''')
 print("Table Product has created")
 
@@ -126,14 +128,6 @@ def adminproductmanagement():
     result = cursor.fetchall()
     return render_template("/adminproductmanagement.html", product=result)
 
-
-def convertToBinaryData(filename):
-    # Convert digital data to binary format
-    with open(filename, 'rb') as file:
-        blobData = file.read()
-    return blobData
-
-
 @app.route("/productentry", methods=['GET', 'POST'])
 def adminproductentry():
     if request.method == 'POST':
@@ -152,11 +146,11 @@ def adminproductentry():
         print(getprice)
 
     try:
-        if getimage.filename != '':
-            getimage.save(getimage.filename)
-        photo = convertToBinaryData(getimage.filename)
+        if getimage!= '':
+           filepath = os.path.join(app.config['UPLOAD_FOLDER'],getimage.filename)
+           getimage.save(filepath)
         query = "INSERT INTO PRODUCT(productid, bname, pname, category, image, price)VALUES(?, ?, ?, ?, ?, ?)"
-        data = (getpid, getbname, getpname, getcategory, photo, getprice)
+        data = (getpid, getbname, getpname, getcategory, getimage.filename, getprice)
         cursor.execute(query, data)
         conn.commit()
         print("SUCCESSFULLY ADDED!")
@@ -164,27 +158,12 @@ def adminproductentry():
         print(e)
 
     return render_template("/adminproductentry.html")
-
-
-def writeTofile(data, filename):
-    # Convert binary data to proper format and write it on Hard Disk
-    with open(filename, 'wb') as file:
-        file.write(data)
-
-
+    
 @app.route("/productdisplay", methods=['GET', 'POST'])
 def userproductdisplay():
     cursor = conn.cursor()
     query = cursor.execute("SELECT * FROM PRODUCT")
     result = cursor.fetchall()
-    for x in result:
-        pname = x[3]
-        image = x[5]
-
-    photopath = "C:\\Users\\yashi\\PycharmProjects\\FarmEasy\\uploads\\" + pname + ".png"
-    print(photopath)
-    writeTofile(image, photopath)
-
     return render_template("/userproductdisplay.html", product=result)
 
 
