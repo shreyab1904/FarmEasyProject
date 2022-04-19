@@ -19,6 +19,7 @@ conn = sqlite3.connect("database.db", check_same_thread=False)
 cursor = conn.cursor()
 listOfTables = conn.execute("SELECT name from sqlite_master WHERE type='table' AND name='USER'").fetchall()
 listOfTables1 = conn.execute("SELECT name from sqlite_master WHERE type='table' AND name='PRODUCT'").fetchall()
+listofTables2 = conn.execute("select * from sqlite_master where type = 'table' and name = 'CART'").fetchall()
 
 if listOfTables != []:
     print("Table User Already Exists ! ")
@@ -36,22 +37,34 @@ else:
     conn.execute(''' CREATE TABLE PRODUCT(
                         ID INTEGER PRIMARY KEY AUTOINCREMENT,
                         productid TEXT, bname TEXT, pname TEXT, category TEXT, image TEXT,
-                        price TEXT); ''')
+                        price INT); ''')
 print("Table Product has created")
 
-
+if listofTables2 !=[]:
+    print("Table already exists")
+else:
+    conn.execute('''create table CART(
+                                user_id TEXT,
+                                product_id INT);''')
 @app.route("/")
 def homepage():
     return render_template("/homepage.html")
 
+@app.route("/dashboard", methods = ['GET','POST'])
+def dashboard():
+    if not session.get("name"):
+        return redirect("/userlogin")
+    else:
+        return render_template("/dashboard.html")
+
 @app.route("/userlogin", methods=['GET', 'POST'])
 def userlogin():
+    global userid
     if request.method == 'POST':
         getemail = request.form['email']
         getpass = request.form['pass']
         print(getemail)
         print(getpass)
-    try:
         query = "SELECT * FROM USER WHERE email='" + getemail + "' AND password='" + getpass + "'"
         cursor.execute(query)
         result = cursor.fetchall()
@@ -63,12 +76,12 @@ def userlogin():
 
             session["name"] = getname
             session["id"] = getid
-            return redirect("/productdisplay")
-    except Exception as e:
-        print(e)
-
-    return render_template("/userlogin.html")
-
+            userid = str(session["id"])
+            return redirect("/dashboard")
+        else:
+            return redirect("userlogin")
+    else:
+        return render_template("/userlogin.html")
 
 @app.route("/usersignup", methods=['GET', 'POST'])
 def usersignup():
@@ -108,17 +121,12 @@ def adminlogin():
         getpass = request.form["pass"]
     try:
         if getname == 'admin' and getpass == "12345":
-            return redirect("/dashboard")
+            return redirect("/productmanagement")
         else:
             print("Invalid username and password")
     except Exception as e:
         print(e)
     return render_template("/adminlogin.html")
-
-
-@app.route("/dashboard")
-def admindashoard():
-    return render_template("/admindashboard.html")
 
 
 @app.route("/productmanagement")
@@ -175,9 +183,11 @@ def delete(getpid):
     return redirect("/productmanagement")
 
 
-@app.route("/update/<getpid>/", methods=['GET', 'POST'])
-def update(getpid):
-    data = cursor.execute("SELECT * FROM PRODUCT WHERE productid = '" + getpid + "'")
+@app.route("/update", methods=['GET', 'POST'])
+def update():
+
+    product_id = request.args.get('productid')
+    data = cursor.execute("SELECT * FROM PRODUCT WHERE productid = '"+str(product_id)+"'")
     result = cursor.fetchall()
     if len(result) == 0:
         print("Invalid Data")
@@ -200,7 +210,7 @@ def update(getpid):
         except Exception as e:
             print(e)
 
-        return render_template("/update.html", product=result)
+    return render_template("/update.html", product=result)
 
 
 @app.route("/search", methods=['GET', 'POST'])
@@ -274,7 +284,16 @@ def nonveg():
 
 @app.route('/payment')
 def home():
-    return render_template('payment.html')
+    query = "SELECT PRODUCT.productid, PRODUCT.pname, PRODUCT.bname, PRODUCT.price, PRODUCT.image FROM PRODUCT, CART WHERE PRODUCT.productid = CART.product_id AND CART.user_id ='"+str(session['id'])+"'"
+    print(query)
+    cursor.execute(query)
+    print("Added!")
+    result = cursor.fetchall()
+    print(result)
+    totalprice = 0
+    for row in result:
+        totalprice += row[3]
+    return render_template('/payment.html', totalprice = totalprice)
 
 @app.route('/success')
 def success():
@@ -299,6 +318,53 @@ def pay():
         return redirect(response['payment_request']['longurl'])
     else:
         return redirect('/')
+
+@app.route("/userlogout", methods=["GET", "POST"])
+def userlogout():
+
+    if not session.get("name"):
+        return redirect("/userlogin")
+    else:
+        session["name"] = None
+        return redirect("/")
+
+@app.route("/addtocart", methods = ['GET','POST'])
+def addtocart():
+    if not session.get("name"):
+        return redirect("/userlogin")
+    else:
+        product_id = request.args.get('productid')
+        try:
+            cursor.execute("INSERT INTO CART(product_id,user_id)values("+product_id+",'"+str(session['id'])+"')")
+            conn.commit()
+            print("PRODUCT ADDED!")
+
+        except Exception as e:
+            print(e)
+    return redirect(url_for('dashboard'))
+
+@app.route("/cart")
+def cart():
+    if not session.get("name"):
+        return redirect("/userlogin")
+    else:
+        query = "SELECT PRODUCT.productid, PRODUCT.pname, PRODUCT.bname, PRODUCT.price, PRODUCT.image FROM PRODUCT, CART WHERE PRODUCT.productid = CART.product_id AND CART.user_id ='"+str(session['id'])+"'"
+        print(query)
+        cursor.execute(query)
+        print("Added!")
+        result = cursor.fetchall()
+        print(result)
+        totalprice = 0
+        for row in result:
+            totalprice += row[3]
+    return render_template("/cart.html", product = result, totalprice = totalprice)
+
+@app.route('/remove/<getpid>/', methods=['GET', 'POST'])
+def remove(getpid):
+    data = "DELETE FROM CART WHERE product_id='" + getpid + "'"
+    cursor.execute(data)
+    conn.commit()
+    return redirect("/cart")
 
 if __name__ == "__main__":
     app.run(debug=True)

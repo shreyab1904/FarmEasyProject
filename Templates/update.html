@@ -8,9 +8,9 @@
     <div class="container">
         <div class="row">
             <div class="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-            <form action="/update" method="post" enctype="multipart/form-data">
+                {% for i in product %}
+                <form action="/update" method="post" enctype="multipart/form-data">
                 <table class="table table-borderless" style="color: white;">
-                    {% for i in product %}
                     <tr>
                     <td>Product-ID : </td>
                     <td><input value = {{ i[1] }} name="pid" type="text" class="form-control" style="border-radius: 20px;"></td>
@@ -48,9 +48,10 @@
                     <td></td>
                     <td><button class="btn btn-success" type="submit">UPDATE</button></td>
                 </tr>
-                {% endfor %}
+            
                 </table>
             </form>
+            {% endfor %}
             </div>
         </div>
     </div>

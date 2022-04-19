@@ -20,7 +20,6 @@
             style="border-radius: 20px;"
             required
             name="name"
-            id=""
             placeholder="Name"
           />
         </div>
@@ -31,7 +30,6 @@
               style="border-radius: 20px;"
               required
               name="product"
-              id=""
               placeholder="Purpose"
             />
           </div>
@@ -42,19 +40,18 @@
             style="border-radius: 20px;"
             required
             name="email"
-            id=""
             placeholder="Email-ID"
           />
         </div>
         <div class="form-group">
             <input
-              type="number"
+              type="text"
               class="form-control"
               style="border-radius: 20px;"
               required
               name="amount"
-              id=""
               placeholder="Amount"
+              value="{{totalprice}}" readonly
             />
           </div>
         <div class="form-group">

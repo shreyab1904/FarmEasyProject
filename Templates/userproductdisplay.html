@@ -95,21 +95,27 @@
 
   <section id="header">
     <h3>FarmEasy</h3>
-    <div>
-        <ul id="navbar">
-            <li><a href="/">Home</a></li>
-            <!-- <li><a href="/userlogin">Login</a></li>
-            <li><a href="/usersignup">Sign Up</a></li> -->
-            <li><a href="/search"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-            <li><a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
-            <li><a href="#">Logout</a></li> 
-
-        </ul>
-    </div>
+        <div>
+            <ul id="navbar">
+                <li><a href="/">Home</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="/search"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                <li><a href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
+            </ul>
+            <form class="d-flex" style="margin-left:-3.3cm; margin-top:-1.6cm">
+                <div class="dropdown mt-3">
+                    <button class="btn btn-light dropdown-toggle" type="button" id="book-dropdown" data-bs-toggle="dropdown"><b>Welcome, {{session.name}}!</b></button>
+                    <ul class="dropdown-menu" aria-labelledby="book-dropdown">
+                      <li><a class="dropdown-item" href="/display-snacks">Your orders</a></li>
+                      <li><a class="dropdown-item" href="/display-beverages">Profile</a></li>
+                      <li><a class="dropdown-item" href="/userlogout">Log Out</a></li>
+                    </ul>
+                  </div>
+             </form>
+        </div>
 
 </section>
 <div class="sidebar">
-    <!-- <header>FarmEasy</header> -->
     <ul>
         <li><a href="/display-snacks">Snacks</a></li>
         <li><a href="/display-beverages">Beverages</a></li>
@@ -150,10 +156,10 @@
                       <p class="card-text">{{ i[2] }}</p>
                       </div>
                       <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Price : {{ i[6] }}</li>
+                        <li class="list-group-item">Price : Rs.{{ i[6] }}/-</li>
                         <p class ="product-quantity" style="font-size: medium; float: left; width: 10 px; padding: 5px; background-color: white;">Quantity : <input style="text-align: center;" value="1" type="number" name="quantity" min="1" max="50"></p>
                       </ul>
-                      <a style="border-radius: 20px;" href="#" class="btn btn-success">Add to Cart</a>
+                      <a style="border-radius: 20px;" href="/addtocart?productid={{i[1]}}" class="btn btn-success">Add to Cart</a>
                   </form>
             </div>
         </div>
