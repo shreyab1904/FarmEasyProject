@@ -278,6 +278,9 @@ def home():
 
 @app.route('/success')
 def success():
+    query = "DELETE FROM CART WHERE user_id = '"+str(session['id'])+"'"
+    cursor.execute(query)
+    conn.commit()
     return render_template('success.html')
 
 @app.route('/pay', methods=['POST', 'GET'])
