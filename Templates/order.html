@@ -12,7 +12,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
-    <title>Home Page</title>
+    <title>Order</title>
     <style>
         @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
         body{
@@ -236,6 +236,12 @@
         font-weight: 600;
 
     }
+    #total{
+        margin-left: 5.5cm;
+        font-size: large;
+        font-weight: 700    ;
+
+    }
     </style>
 </head>
 <body>
@@ -253,117 +259,85 @@
                 <div class="dropdown mt-3">
                     <button class="btn btn-light dropdown-toggle" type="button" id="book-dropdown" data-bs-toggle="dropdown" style="background-color: white;"><b>Welcome, {{session.name}}!</b></button>
                     <ul class="dropdown-menu" aria-labelledby="book-dropdown">
-                      <li><a class="dropdown-item" href="/order">Your Order</a></li>
                       <li><a class="dropdown-item" href="/userlogout">Log Out</a></li>
                     </ul>
                   </div>
              </form>
         </div>
     </section>
+   
+    <h3 style="text-align: center; margin-top: 1%; font-size: xx-large;">YOUR ORDER</h3>
+    <hr>
 
-    <div class="white-text-container background-image-container" style="background-image: url(https://www.mercatus.com/wp-content/uploads/2021/08/non-descript-delivery.jpg);">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 style="margin-left: 1cm;" >FarmEasy : Just Click It</h1>
-                    <p style="text-align:left; font-size: large; color: #000;">Bring the store to your door!</p>
-                     <a href="" title="" class=" "> </a>
-                </div>
-    
-            </div>
-        </div>
-    </div>
-    <br>
-    
-    <section id = "category">
-        <div class="category-heading">
-            <h2>Category</h2>
-            <span>All</span>
-        </div>
-
-        <div class="category-container">
-            <a href="/display-snacks" class="category-box">
-                <span>Snacks</span>
-            </a>
-            <a href="/display-beverages" class="category-box">
-                <span>Beverages</span>
-            </a>
-            <a href="/display-bakery" class="category-box">
-                <span>Bakery</span>
-            </a>
-            <a href="/display-fruits" class="category-box">
-                <span>Fruits</span>
-            </a>
-            <a href="/display-vegetables" class="category-box">
-                <span>Vegetables</span>
-            </a>
-            <a href="/display-nonveg" class="category-box">
-                <span>Non-Veg</span>
-            </a>
-        </div>
-
-        <div class="category-heading">
-            <h2 style="margin-top: 1.5cm;">Our Products</h2>
-        </div>
-
-        <div class="category-container">
-            <a href="/productdisplay" class="category-box">
-                <span>Viewall</span>
-                
-            </a>
-        </div>
-
-    </section>
-
- <div class="footer">
     <div class="container">
         <div class="row">
-            <div class="col-lg-7">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="footer-contact">
-                            <h2>About Us</h2>
-                            <p><i class="fa fa-map-marker-alt"></i>FarmEasy is India’s fastest online grocery delivery platform.Get fresh groceries and much more delivered online instantly. Single app for all your daily needs. Order thousands of products at just a tap </p>
-                            
-                            
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="footer-link">
-                            <h2>Quick Links</h2>
-                            <a href="">Terms of use</a>
-                            <a href="">Privacy policy</a>
-                            <a href="">Cookies</a>
-                            <a href="">Help</a>
-                            <a href="">FQAs</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-5">
-                <div class="footer-newsletter">
-                    <h2>Newsletter</h2>
-                    <p>
-                        Subscribe for more exciting offers.
-                    </p>
-                    <div class="form">
-                        <input class="form-control" placeholder=" ">
-                        <button class="btn custom-btn">Submit</button>
-                    </div>
-                </div>
+            {% for i in product %}
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
+                    <div class="card" style="width: 16rem; margin-top: 1cm; border-radius: 20px;">
+                      <img class="card-img-top" style="width: auto; height: 5cm;" src="/static/uploads/{{i[4]}}" alt="">
+                      <div class="card-body">
+                      <h5 class="card-title">{{ i[1] }}</h5>
+                      <p class="card-text">{{ i[2] }}</p>
+                      </div>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Price : Rs.{{ i[3] }}/-</li>
+                      </ul>
             </div>
         </div>
+            {% endfor %}
+            
     </div>
-    <div class="copyright">
+    </div>
+
+    <div class="footer">
         <div class="container">
-            <p>Copyright &copy; <a href="#">FarmEasy.com</a>, All Right Reserved.</p>
-            <p>Designed By <a href="https://www.instagram.com">FarmEasy.com</a></p>
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="footer-contact">
+                                <h2>About Us</h2>
+                                <p><i class="fa fa-map-marker-alt"></i>FarmEasy is India’s fastest online grocery delivery platform.Get fresh groceries and much more delivered online instantly. Single app for all your daily needs. Order thousands of products at just a tap </p>
+                                
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="footer-link">
+                                <h2>Quick Links</h2>
+                                <a href="">Terms of use</a>
+                                <a href="">Privacy policy</a>
+                                <a href="">Cookies</a>
+                                <a href="">Help</a>
+                                <a href="">FQAs</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="footer-newsletter">
+                        <h2>Newsletter</h2>
+                        <p>
+                            Subscribe for more exciting offers.
+                        </p>
+                        <div class="form">
+                            <input class="form-control" placeholder=" ">
+                            <button class="btn custom-btn">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                <p>Copyright &copy; <a href="#">FarmEasy.com</a>, All Right Reserved.</p>
+                <p>Designed By <a href="https://www.instagram.com">FarmEasy.com</a></p>
+            </div>
         </div>
     </div>
-</div>
-<!-- Footer End -->
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-</body>
-</html>
+    <!-- Footer End -->
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    </body>
+    </html>

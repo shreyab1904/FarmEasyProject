@@ -20,6 +20,7 @@ cursor = conn.cursor()
 listOfTables = conn.execute("SELECT name from sqlite_master WHERE type='table' AND name='USER'").fetchall()
 listOfTables1 = conn.execute("SELECT name from sqlite_master WHERE type='table' AND name='PRODUCT'").fetchall()
 listofTables2 = conn.execute("select * from sqlite_master where type = 'table' and name = 'CART'").fetchall()
+listofTables3 = conn.execute("select * from sqlite_master where type = 'table' and name = 'ORDERS'").fetchall()
 
 if listOfTables != []:
     print("Table User Already Exists ! ")
@@ -46,6 +47,16 @@ else:
     conn.execute('''create table CART(
                                 user_id TEXT,
                                 product_id INT);''')
+print("Table Cart has created")
+
+if listofTables3 !=[]:
+    print("Table already exists")
+else:
+    conn.execute(''' CREATE TABLE ORDERS(
+                                user_id TEXT,
+                                product_id INT);''')
+print("Table ORDER has created")
+
 @app.route("/")
 def homepage():
     return render_template("/homepage.html")
@@ -183,36 +194,6 @@ def delete(getpid):
     return redirect("/productmanagement")
 
 
-@app.route("/update", methods=['GET', 'POST'])
-def update():
-
-    product_id = request.args.get('productid')
-    data = cursor.execute("SELECT * FROM PRODUCT WHERE productid = '"+str(product_id)+"'")
-    result = cursor.fetchall()
-    if len(result) == 0:
-        print("Invalid Data")
-    else:
-        if request.method == 'POST':
-            getpid = request.form['pid']
-            getbname = request.form['bname']
-            getpname = request.form['pname']
-            getcategory = request.form['category']
-            getimage = request.files['img']
-            getprice = request.form['price']
-
-        try:
-            query = "UPDATE PRODUCT SET productid = '" + getpid + "', bname = '" + getbname + "', pname = '" + getpname + "', category ='" + getcategory + "', image='" + getimage + "', price = '" + getprice + "'"
-            cursor.execute(query)
-            result = cursor.fetchall()
-            conn.commit()
-            return redirect("/productmanagement")
-
-        except Exception as e:
-            print(e)
-
-    return render_template("/update.html", product=result)
-
-
 @app.route("/search", methods=['GET', 'POST'])
 def search():
     if request.method == "POST":
@@ -339,6 +320,7 @@ def addtocart():
         product_id = request.args.get('productid')
         try:
             cursor.execute("INSERT INTO CART(product_id,user_id)values("+product_id+",'"+str(session['id'])+"')")
+            cursor.execute("INSERT INTO ORDERS(product_id,user_id)values("+product_id+",'"+str(session['id'])+"')")
             conn.commit()
             print("PRODUCT ADDED!")
 
@@ -368,6 +350,24 @@ def remove(getpid):
     cursor.execute(data)
     conn.commit()
     return redirect("/cart")
+
+@app.route("/order")
+def order():
+    if not session.get("name"):
+        return redirect("/userlogin")
+    else:
+        try:
+            query = "SELECT PRODUCT.productid, PRODUCT.pname, PRODUCT.bname, PRODUCT.price, PRODUCT.image FROM PRODUCT JOIN ORDERS on ORDERS.product_id = PRODUCT.productid WHERE ORDERS.user_id ='"+str(session['id'])+"'"
+            print(query)
+            cursor.execute(query)
+            print("Order Added!")
+            result = cursor.fetchall()
+            print(result)
+            return render_template("/order.html",product=result,status=True)
+        except Exception as e:
+            print(e)
+    return render_template("/order.html",product=[],status=False)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
