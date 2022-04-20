@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, session, url_for
 from flask_session import Session
 import os.path
 from instamojo_wrapper import Instamojo
+from datetime import date
 
 API_KEY = "test_ae0ed2ba0300671b76829da7965"
 AUTH_TOKEN = "test_4da4849c457db419475e7b97b4c"
@@ -54,7 +55,8 @@ if listofTables3 !=[]:
 else:
     conn.execute(''' CREATE TABLE ORDERS(
                                 user_id TEXT,
-                                product_id INT);''')
+                                product_id INT,
+                                date TEXT);''')
 print("Table ORDER has created")
 
 @app.route("/")
@@ -320,10 +322,11 @@ def addtocart():
     if not session.get("name"):
         return redirect("/userlogin")
     else:
+        getdate = str(date.today())
         product_id = request.args.get('productid')
         try:
             cursor.execute("INSERT INTO CART(product_id,user_id)values("+product_id+",'"+str(session['id'])+"')")
-            cursor.execute("INSERT INTO ORDERS(product_id,user_id)values("+product_id+",'"+str(session['id'])+"')")
+            cursor.execute("INSERT INTO ORDERS(product_id,user_id,date)values("+product_id+",'"+str(session['id'])+"','"+getdate+"')")
             conn.commit()
             print("PRODUCT ADDED!")
 
@@ -360,7 +363,7 @@ def order():
         return redirect("/userlogin")
     else:
         try:
-            query = "SELECT PRODUCT.productid, PRODUCT.pname, PRODUCT.bname, PRODUCT.price, PRODUCT.image FROM PRODUCT JOIN ORDERS on ORDERS.product_id = PRODUCT.productid WHERE ORDERS.user_id ='"+str(session['id'])+"'"
+            query = "SELECT PRODUCT.productid, PRODUCT.pname, PRODUCT.bname, PRODUCT.price, PRODUCT.image, ORDERS.date FROM PRODUCT JOIN ORDERS on ORDERS.product_id = PRODUCT.productid WHERE ORDERS.user_id ='"+str(session['id'])+"'"
             print(query)
             cursor.execute(query)
             print("Order Added!")
@@ -371,6 +374,14 @@ def order():
             print(e)
     return render_template("/order.html",product=[],status=False)
 
+@app.route("/adminorder")
+def adminorder():
+    query = "SELECT USER.firstname, USER.lastname, USER.email, ORDERS.date, PRODUCT.pname, PRODUCT.price FROM USER JOIN ORDERS ON USER.ID = ORDERS.user_id JOIN PRODUCT ON ORDERS.product_id = PRODUCT.productid"
+    print(query)
+    cursor.execute(query)
+    result= cursor.fetchall()
+    print(result)
+    return render_template("/adminorder.html", product = result)
 
 if __name__ == "__main__":
     app.run(debug=True)
