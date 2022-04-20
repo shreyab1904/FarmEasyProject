@@ -24,7 +24,10 @@
               left: 0;
               width: 250px;
               height: 100%;
-              background: #025a29;
+              background: #416e55;
+              margin-top: -1.5cm;
+              border-radius: 0px 20px;
+              margin-top: 0.2cm;
           }
           .sidebar header{
               font-size: 22px;
@@ -38,10 +41,9 @@
               display: block;
               height: 100%;
               width: 100%;
-              line-height: 40px;
+              line-height: 45px;
               font-size: 20px;
               color: white;
-              padding-left: 40px;
               box-sizing: border-box;
               border-top: 1px solid rgba(255,255,255,.1);
               border-bottom: 1px solid black;
@@ -93,63 +95,45 @@
 <body style="background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXZuj8D0jC20_ZT7pcQmNumQftrhhMTFn2WA&usqp=CAU) no-repeat; background-attachment: fixed; background-size: 100%;">
 
 
-  <section id="header">
-    <h3>FarmEasy</h3>
+    <section id="header">
+        <h3>FarmEasy</h3>
         <div>
             <ul id="navbar">
-                <li><a href="/">Home</a></li>
+                <li><a href="/dashboard">Home</a></li>
                 <li><a href="#">Contact</a></li>
                 <li><a href="/search"><i class="fa fa-search" aria-hidden="true"></i></a></li>
                 <li><a href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
             </ul>
-            <form class="d-flex" style="margin-left:-3.3cm; margin-top:-1.6cm">
+            <form class="d-flex" style="margin-left:-4.6cm; margin-top:-1.6cm">
                 <div class="dropdown mt-3">
-                    <button class="btn btn-light dropdown-toggle" type="button" id="book-dropdown" data-bs-toggle="dropdown"><b>Welcome, {{session.name}}!</b></button>
+                    <button class="btn btn-light dropdown-toggle" type="button" id="book-dropdown" data-bs-toggle="dropdown" style="background-color: white;"><b>Welcome, {{session.name}}!</b></button>
                     <ul class="dropdown-menu" aria-labelledby="book-dropdown">
-                      <li><a class="dropdown-item" href="/display-snacks">Your orders</a></li>
-                      <li><a class="dropdown-item" href="/display-beverages">Profile</a></li>
                       <li><a class="dropdown-item" href="/userlogout">Log Out</a></li>
                     </ul>
                   </div>
              </form>
         </div>
-
-</section>
-<div class="sidebar">
-    <ul>
-        <li><a href="/display-snacks">Snacks</a></li>
-        <li><a href="/display-beverages">Beverages</a></li>
-        <li><a href="/display-bakery">Bakery</a></li>
-        <li><a href="/display-fruits">Fruits</a></li>
-        <li><a href="/display-vegetables">Vegetables</a></li>
-        <li><a href="/display-nonveg">Eggs,Meat,Fish</a></li>
-    </ul>
-</div>
+    </section>
 
 
-
-    <!-- <h3 style="text-align: center; margin-top: 1%; font-size: xx-large;">PRODUCT PAGE</h3> -->
-    
-    <!-- <div class="dropdown mt-3">
-        <button class="btn btn-success dropdown-toggle" type="button" id="book-dropdown" data-bs-toggle="dropdown" style="margin-left: 3.5cm; margin-top: 0.5cm;">
-          Categories
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="book-dropdown">
-          <li><a class="dropdown-item" href="/display-snacks">Snacks</a></li>
-          <li><a class="dropdown-item" href="/display-beverages">Beverages</a></li>
-          <li><a class="dropdown-item" href="/display-bakery">Bakery</a></li>
-          <li><a class="dropdown-item" href="/display-fruits">Fruits</a></li>
-          <li><a class="dropdown-item" href="/display-vegetables">Vegetables</a></li>
-          <li><a class="dropdown-item" href="/display-nonveg">Eggs, Meat and Fish</a></li>
+    <div class="sidebar">
+        <ul>
+            <li><a href="/display-snacks">Snacks</a></li>
+            <li><a href="/display-beverages">Beverages</a></li>
+            <li><a href="/display-bakery">Bakery & Dairy</a></li>
+            <li><a href="/display-fruits">Fruits</a></li>
+            <li><a href="/display-vegetables">Vegetables</a></li>
+            <li><a href="/display-nonveg">Eggs, Meat & Fish</a></li>
         </ul>
-      </div> -->
-      <section>
+    </div>
+    <section>
+    <h3 style="margin-left: 20cm; margin-top: 1%; font-size: xx-large; font-weight: 1000;">OUR PRODUCT</h3>
     <div class="container">
         <div class="row">
             {% for i in product %}
-                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-4">
                   <form action="/userproductdisplay" method="post">
-                    <div class="card" style="width: 16rem; margin-top: 1cm; border-radius: 20px;">
+                    <div class="card" style="margin-left:5cm ;width: 16rem; margin-top: 1cm; border-radius: 20px;">
                       <img class="card-img-top" style="width: auto; height: 5cm;" src="/static/uploads/{{i[5]}}" alt="">
                       <div class="card-body">
                       <h5 class="card-title">{{ i[3] }}</h5>
@@ -157,7 +141,6 @@
                       </div>
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item">Price : Rs.{{ i[6] }}/-</li>
-                        <p class ="product-quantity" style="font-size: medium; float: left; width: 10 px; padding: 5px; background-color: white;">Quantity : <input style="text-align: center;" value="1" type="number" name="quantity" min="1" max="50"></p>
                       </ul>
                       <a style="border-radius: 20px;" href="/addtocart?productid={{i[1]}}" class="btn btn-success">Add to Cart</a>
                   </form>

@@ -301,23 +301,26 @@ def success():
 
 @app.route('/pay', methods=['POST', 'GET'])
 def pay():
-    if request.method == 'POST':
-        name = request.form.get('name')
-        product = request.form.get('product')
-        email = request.form.get('email')
-        amount = request.form.get('amount')
+    if not session.get("name"):
+        return redirect("/userlogin")
+    else:    
+        if request.method == 'POST':
+            name = request.form.get('name')
+            product = request.form.get('product')
+            email = request.form.get('email')
+            amount = request.form.get('amount')
 
-        response = api.payment_request_create(
-            amount=amount,
-            purpose=product,
-            buyer_name=name,
-            send_email=True,
-            email=email,
-            redirect_url="http://localhost:5000/success"
-        )
-        return redirect(response['payment_request']['longurl'])
-    else:
-        return redirect('/')
+            response = api.payment_request_create(
+                amount=amount,
+                purpose=product,
+                buyer_name=name,
+                send_email=True,
+                email=email,
+                redirect_url="http://localhost:5000/success"
+            )
+            return redirect(response['payment_request']['longurl'])
+        else:
+            return redirect('/')
 
 @app.route("/userlogout", methods=["GET", "POST"])
 def userlogout():
@@ -341,7 +344,7 @@ def addtocart():
 
         except Exception as e:
             print(e)
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('userproductdisplay'))
 
 @app.route("/cart")
 def cart():
