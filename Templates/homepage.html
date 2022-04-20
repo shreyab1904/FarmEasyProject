@@ -236,6 +236,15 @@
         font-weight: 600;
 
     }
+    .category-box button{
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        color: black;
+        font-size: 1rem;
+        margin-top: 10px;
+        letter-spacing: 0.3px;
+        font-weight: 600;
+
+    }
     </style>
 </head>
 <body>
@@ -244,15 +253,21 @@
         <h3>FarmEasy</h3>
         <div>
             <ul id="navbar">
-                <li><a href="/userlogin">Login</a></li>
-                <li><a href="/">Home</a></li>
-                <li><a href="/usersignup">Sign Up</a></li>
+                <li><a href="/dashboard">Home</a></li>
                 <li><a href="#">Contact</a></li>
                 <li><a href="/search"><i class="fa fa-search" aria-hidden="true"></i></a></li>
                 <li><a href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
             </ul>
+            <form class="d-flex" style="margin-left:-4.6cm; margin-top:-1.6cm">
+                <div class="dropdown mt-3">
+                    <button class="btn btn-light dropdown-toggle" type="button" id="book-dropdown" data-bs-toggle="dropdown" style="background-color: white;"><b>Welcome, {{session.name}}!</b></button>
+                    <ul class="dropdown-menu" aria-labelledby="book-dropdown">
+                      <li><a class="dropdown-item" href="/order">Your Order</a></li>
+                      <li><a class="dropdown-item" href="/userlogout">Log Out</a></li>
+                    </ul>
+                  </div>
+             </form>
         </div>
-
     </section>
 
     <div class="white-text-container background-image-container" style="background-image: url(https://www.mercatus.com/wp-content/uploads/2021/08/non-descript-delivery.jpg);">
@@ -302,8 +317,7 @@
 
         <div class="category-container">
             <a href="/productdisplay" class="category-box">
-                <span>Viewall</span>
-                
+                <button class="btn btn-light" style="background-color: white;">Viewall</button> 
             </a>
         </div>
 
