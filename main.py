@@ -126,6 +126,36 @@ def usersignup():
 
     return render_template("/usersignup.html")
 
+@app.route("/editprofile")
+def editprofile():
+    cursor.execute("SELECT * FROM USER where ID="+str(session['id']))
+    result = cursor.fetchall()
+    return render_template("updateuser.html", user=result)
+
+@app.route("/updateuser", methods=['GET', 'POST'])
+def updateprofile():
+    if request.method == "POST":
+        try:
+            getfirstname = request.form['firstname']
+            print(getfirstname)
+            getlastname = request.form['lastname']
+            print(getlastname)
+            getDOB = request.form['DOB']
+            print(getDOB)
+            getemail = request.form['email']
+            print(getemail)
+            getphone = request.form['phone']
+            print(getphone)
+            getpass = request.form['pass']
+            print(getpass)
+            getcnfpass = request.form['cnfpass']
+            print(getcnfpass)
+            conn.execute("UPDATE USER SET firstname = '"+getfirstname+"',lastname = '"+getlastname+"',DOB = '"+getDOB+"',email = '"+getemail+"',phone = '"+getphone+"',password = '"+getpass+"',confirmpassword = '"+getcnfpass+"' WHERE ID="+str(session['id']))
+            conn.commit()
+            return redirect("/dashboard")
+        except Exception as e:
+            print(e)
+    return render_template("/updateuser.html")
 
 @app.route("/adminlogin", methods=['GET', 'POST'])
 def adminlogin():
@@ -217,6 +247,39 @@ def search():
 
     return render_template("search.html", product=[], status=False)
 
+@app.route("/edit")
+def edit():
+    getid = str(request.args.get('id'))
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM PRODUCT where productid=" + getid)
+    result = cursor.fetchall()
+    return render_template("update.html", product=result)
+
+@app.route("/update",methods = ["GET","POST"])
+def update():
+    if request.method == "POST":
+        try:
+            getpid = request.form['pid']
+            print(getpid)
+            getbname = request.form['bname']
+            print(getbname)
+            getpname = request.form['pname']
+            print(getpname)
+            getcategory = request.form['category']
+            print(getcategory)
+            getimage = request.files['img']
+            print(getimage)
+            getprice = request.form['price']
+            print(getprice)
+            if getimage != '':
+                filepath = os.path.join(app.config['UPLOAD_FOLDER'], getimage.filename)
+                getimage.save(filepath)
+            conn.execute("UPDATE PRODUCT SET productid = '"+getpid+"',bname = '"+getbname+"',pname = '"+getpname+"',category = '"+getcategory+"',image = '"+getimage.filename+"',price = '"+getprice+"' WHERE productid = "+getpid)
+            conn.commit()
+            return redirect("/productmanagement")
+        except Exception as e:
+            print(e)
+    return render_template("update.html")
 
 @app.route("/display-snacks", methods=['GET', 'POST'])
 def snacks():

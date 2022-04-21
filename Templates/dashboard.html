@@ -14,53 +14,14 @@
 
     <title>Home Page</title>
     <style>
-        @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-        body{
-            width: 100%;
-            overflow-x:hidden;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        }
-        #header{
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 55px;
-            background: #ffffff;
-        }
-        #navbar{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        #navbar li{
-            list-style: none;
-            padding: 0 15px;
-        }
-        #navbar li a{
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 600;
-            color: #1a1a1a;
-            transition: 0.3s ease;
-        }
-        #navbar li a:hover{
-            color: #088178;
-        }
-        .white-text-container h1,.white-text-container h2,.white-text-container h3,.white-text-container h4,.white-text-container h5,.white-text-container p{
-            color:black;
-            font-family: Verdana;
-            padding: 2px;
-            width: 100%;
-            margin-left: 1cm;
-        }
-        .background-image-container{
-            position:relative;
-            background-size:cover;
-            background-repeat:no-repeat;
-            background-position:top;padding:12% 0
-        }
-    
-          
+        
+    .background-image-container{
+        position:relative;
+        background-size:cover;
+        background-repeat:no-repeat;
+        background-position:top;padding:12% 0
+    }
+       
     .footer {
         position: relative;
         margin-top: 45px;
@@ -248,25 +209,40 @@
 </head>
 <body>
     <!--header start-->
-    <section id="header">
-        <h3>FarmEasy</h3>
-        <div>
-            <ul id="navbar">
-                <li><a href="/dashboard">Home</a></li>
-                <li><a href="/productdisplay">Products</a></li>
-                <li><a href="/cart">Cart</a></li>
-            </ul>
-            <form class="d-flex" style="margin-left:-4.6cm; margin-top:-1.6cm">
-                <div class="dropdown mt-3">
-                    <button class="btn btn-light dropdown-toggle" type="button" id="book-dropdown" data-bs-toggle="dropdown" style="background-color: white; margin-top: -0.1cm; margin-left: 1cm;"><b>Welcome, {{session.name}}!</b></button>
-                    <ul class="dropdown-menu" aria-labelledby="book-dropdown">
-                    <li><a class="dropdown-item" href="/order">Your Order</a></li>
-                    <li><a class="dropdown-item" href="/userlogout">Log Out</a></li>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/dashboard" style="font-weight: 500;">FarmEasy</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarText" style="font-weight: 500;">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: 500;">
+                        Welcome
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li><a class="dropdown-item" href="/editprofile">Edit Profile</a></li>
+                      <li><a class="dropdown-item" href="/order">Your Orders</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="/userlogout">Logout</a></li>
                     </ul>
-                  </div>
-             </form>
+                  </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/productdisplay">Products</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="/dashboard">Home</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="/cart">Cart</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="/adminlogin">Admin</a>
+              </li>
+          </ul>
         </div>
-    </section>
+      </nav>
+
 
     <div class="white-text-container background-image-container" style="background-image: url(https://www.mercatus.com/wp-content/uploads/2021/08/non-descript-delivery.jpg);">
         <div class="container">

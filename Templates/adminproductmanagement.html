@@ -38,7 +38,9 @@
                 <td>{{ i[4] }}</td>
                 <td>Rs. {{ i[6] }}/-</td>
                 <td>
+                  <a href="/edit?id={{ i[1] }}" class = "btn btn-dark" style="border-radius: 20px;">UPDATE</a>
                   <a href="/delete/{{ i[1] }}" class = "btn btn-danger" style="border-radius: 20px;">DELETE</a>
+                  
                 </td>
             </tr>
             {% endfor %}
