@@ -47,7 +47,8 @@ if listofTables2 !=[]:
 else:
     conn.execute('''create table CART(
                                 user_id TEXT,
-                                product_id INT);''')
+                                product_id INT,
+                                date TEXT);''')
 print("Table Cart has created")
 
 if listofTables3 !=[]:
@@ -343,8 +344,12 @@ def home():
 
 @app.route('/success')
 def success():
-    query = "DELETE FROM CART WHERE user_id = '"+str(session['id'])+"'"
+    getdate = str(date.today())
+    query = "INSERT INTO ORDERS SELECT * FROM CART"
     cursor.execute(query)
+    conn.commit()
+    query1 = "DELETE FROM CART WHERE user_id = '"+str(session['id'])+"'"
+    cursor.execute(query1)
     conn.commit()
     return render_template('success.html')
 
@@ -388,8 +393,7 @@ def addtocart():
         getdate = str(date.today())
         product_id = request.args.get('productid')
         try:
-            cursor.execute("INSERT INTO CART(product_id,user_id)values("+product_id+",'"+str(session['id'])+"')")
-            cursor.execute("INSERT INTO ORDERS(product_id,user_id,date)values("+product_id+",'"+str(session['id'])+"','"+getdate+"')")
+            cursor.execute("INSERT INTO CART(product_id,user_id,date)values("+product_id+",'"+str(session['id'])+"','"+getdate+"')")
             conn.commit()
             print("PRODUCT ADDED!")
 
