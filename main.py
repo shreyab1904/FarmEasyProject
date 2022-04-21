@@ -443,7 +443,7 @@ def order():
 
 @app.route("/adminorder")
 def adminorder():
-    query = "SELECT USER.firstname, USER.lastname, USER.email, ORDERS.date, PRODUCT.pname, PRODUCT.price FROM USER JOIN ORDERS ON USER.ID = ORDERS.user_id JOIN PRODUCT ON ORDERS.product_id = PRODUCT.productid"
+    query = "SELECT USER.firstname, USER.lastname, USER.email, ORDERS.date, PRODUCT.pname, PRODUCT.price FROM USER JOIN ORDERS ON USER.ID = ORDERS.user_id JOIN PRODUCT ON ORDERS.product_id = PRODUCT.productid ORDER BY ORDERS.date"
     print(query)
     cursor.execute(query)
     result= cursor.fetchall()
