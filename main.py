@@ -441,9 +441,21 @@ def order():
             print(e)
     return render_template("/order.html",product=[],status=False)
 
+@app.route("/orderstatus")
+def orderstatus():
+    try:
+        query = "SELECT ORDERS.date, PRODUCT.pname, PRODUCT.bname, PRODUCT.image, PRODUCT.price FROM PRODUCT JOIN ORDERS on ORDERS.product_id = PRODUCT.productid WHERE ORDERS.user_id = '"+str(session['id'])+"'"
+        cursor.execute(query)
+        result = cursor.fetchall()
+        print(result)
+        return render_template("/orderstatus.html", product = result)
+    except Exception as e:
+        print(e)
+    return render_template("/orderstatus.html", product =[])
+
 @app.route("/adminorder")
 def adminorder():
-    query = "SELECT USER.firstname, USER.lastname, USER.email, ORDERS.date, PRODUCT.pname, PRODUCT.price FROM USER JOIN ORDERS ON USER.ID = ORDERS.user_id JOIN PRODUCT ON ORDERS.product_id = PRODUCT.productid ORDER BY ORDERS.date"
+    query = "SELECT USER.firstname, USER.lastname, USER.email, ORDERS.date, PRODUCT.pname, PRODUCT.price FROM USER JOIN ORDERS ON USER.ID = ORDERS.user_id JOIN PRODUCT ON ORDERS.product_id = PRODUCT.productid ORDER BY ORDERS.date DESC"
     print(query)
     cursor.execute(query)
     result= cursor.fetchall()
