@@ -13,6 +13,7 @@
               padding: 0;
               list-style: none;
               text-decoration: none;
+              overflow-x: hidden;
           }
           .sidebar{
               position: fixed;
@@ -106,7 +107,7 @@
     <div class="container">
         <div class="row">
             {% for i in product %}
-                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-4">
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                   <form action="/userproductdisplay" method="post">
                     <div class="card" style="margin-left:5cm ;width: 16rem; margin-top: 1cm; border-radius: 20px;">
                       <img class="card-img-top" style="width: auto; height: 5cm;" src="/static/uploads/{{i[5]}}" alt="">
